@@ -1,7 +1,5 @@
 import torch
 import torch.nn as nn
-import numpy as np
-from torch.nn import functional as F
 from torch.autograd import Variable
 
 

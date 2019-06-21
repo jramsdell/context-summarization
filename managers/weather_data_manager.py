@@ -1,14 +1,13 @@
-from learning.models.logistic_model import LogisticModel
-from learning.models.logistic_nn_model import LogisticNetModel
-from learning.models.rnn_model import RNNModel
-from learning.trainers.simple_trainer import SimpleTrainer
-from parsing.weather_parser import WeatherParser
+import numpy as np
+import torch
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from torch import Tensor
-import numpy as np
-import torch
 
+from learning.models.logistic_model import LogisticModel
+from learning.models.logistic_nn_model import LogisticNetModel
+from learning.trainers.simple_trainer import SimpleTrainer
+from parsing.weather_parser import WeatherParser
 
 
 class WeatherDataManager(object):

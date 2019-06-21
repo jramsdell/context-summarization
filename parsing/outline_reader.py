@@ -1,9 +1,7 @@
-import json
 from typing import *
-from typing import Dict, List, Any
+from typing import Dict
 
 from trec_car.read_data import iter_outlines
-
 
 
 class OutlineReader(object):

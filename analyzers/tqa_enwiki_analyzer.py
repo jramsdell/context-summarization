@@ -3,8 +3,9 @@ import json
 from parsing.blobbing.blobber import Blobber, BigramBlobber
 
 
+
 class TQAEnwikiAnalyzer(object):
-    def __init__(self, loc, n_limit = -1):
+    def __init__(self, loc, n_limit = -1, use_bert_tokenizer=True):
         self.data = []
         self.blobber = Blobber()
         self.bigram_blobber = BigramBlobber()
@@ -33,6 +34,20 @@ class TQAEnwikiAnalyzer(object):
 
     def blobbify(self, vocab_index=None, bigram_index=None):
         for example in self.data:
+
+            # print("--------\n")
+            # print(example["context"])
+            # print(example["tqa"][0]["text"] + "\n")
+            # for i in example["enwiki"]:
+            #     print(i["text"] + "\n")
+            #
+            # print("--------\n")
+
+            print("Query:\n{}\n".format(example["qid"]))
+
+            for i in example["tqa"]:
+                print(i["text"].replace(".", ".\n"))
+
             self.blob_by_label("tqa", example["tqa"])
             self.blob_by_label("enwiki", example["enwiki"])
             self.blob_by_label("negatives", example["negatives"])

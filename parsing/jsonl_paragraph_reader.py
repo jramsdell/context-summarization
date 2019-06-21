@@ -1,6 +1,6 @@
-from typing import *
 import json
-import shelve
+from typing import *
+
 
 class JSONLParagraphReader(object):
     def __init__(self, loc, index_loc):

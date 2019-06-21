@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
-import numpy as np
-from torch.nn import functional as F
+
 
 class LogisticNetModel(torch.nn.Module):
     def __init__(self, n_dims):

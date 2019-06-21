@@ -1,10 +1,9 @@
-from typing import *
+import json
 import sys
 from collections import OrderedDict
-from typing import Dict, Any
+from typing import *
+
 from trec_car.read_data import iter_paragraphs, Paragraph, ParaLink, ParaText
-import json
-import os
 
 
 class CborRetriever(object):

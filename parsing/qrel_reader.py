@@ -21,7 +21,10 @@ class QrelReader(object):
     negative_qrels = ...  # type: Dict[str, List[QrelLine]]
 
     def __init__(self, loc):
+        self.c = Counter()
+        self.qid_set = set()
         self.qrels = {}
+        self.rel_map = {}
         self.negative_qrels = {}
         with open(loc, 'r') as f:
             self.parse_qrels(f)
@@ -43,9 +46,23 @@ class QrelReader(object):
     def parse_qrels(self, f):
         for line in f:
             qrel_line = QrelLine(line)
+            self.qid_set.add(qrel_line.qid)
+
+            if qrel_line.qid not in self.rel_map:
+                self.rel_map[qrel_line.qid] = {}
+
+            qmap = self.rel_map[qrel_line.qid]
+            if qrel_line.rel not in qmap:
+                qmap[qrel_line.rel] = []
+            qmap[qrel_line.rel].append(qrel_line.pid)
+
+            # self.c[qrel_line.rel] += 1
+            # print(self.c)
+
+            # if qrel_line.rel <= 2 and qrel_line.rel > 0:
             if qrel_line.rel <= 0:
                 self._add_negative_qrel_line(qrel_line.qid, qrel_line)
-            else:
+            elif qrel_line:
                 self._add_qrel_line(qrel_line.qid, qrel_line)
 
 
@@ -69,8 +86,9 @@ class QrelReader(object):
 
 if __name__ == '__main__':
     # loc = "/home/hcgs/data_science/data/qrels/benchmarkY2test-psg-manual.qrels"
-    loc = "/home/jsc57/plotting/pack/results-for-participants/UNH/benchmarkY2test-goldpassages.qrels"
-    qreader = QrelReader(loc)
+    manual_loc = "/mnt/grapes/share/trec-car-allruns-2018/all-judgments/manual-tqa/all-paragraph-rouge-manual.qrels"
+    keyword_loc = "/home/jsc57/plotting/keywords.text"
+    qreader = QrelReader(manual_loc)
 
     qmap = qreader.retrieve_unique_ids()
     print(qmap)

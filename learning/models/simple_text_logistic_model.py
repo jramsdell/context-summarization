@@ -1,7 +1,4 @@
 import torch
-import torch.nn as nn
-import numpy as np
-from torch.nn import functional as F
 
 from learning.trainers.data_handler import DataHandler
 

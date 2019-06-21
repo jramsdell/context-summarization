@@ -1,10 +1,11 @@
-from textblob import TextBlob
-from nltk import SnowballStemmer
-from sklearn.feature_extraction import DictVectorizer
-from nltk.corpus import stopwords
-from collections import Counter, defaultdict
-from typing import *
 import json
+from collections import Counter
+from typing import *
+
+from nltk import SnowballStemmer
+from nltk.corpus import stopwords
+from sklearn.feature_extraction import DictVectorizer
+from textblob import TextBlob
 
 from utilities import iterutils
 
@@ -23,11 +24,22 @@ class Blobber(object):
 
     def parse_string(self, doc: str):
         words = TextBlob(doc.lower()).words
-        return [self.stemmer.stem(word) for word in words if word not in self.stop_list]
+        if self.loaded_vocab:
+            return [self.stemmer.stem(word) for word in words if word not in self.stop_list and word in self.vocab_index]
+        else:
+            return [self.stemmer.stem(word) for word in words if word not in self.stop_list]
 
     def get_freq_map(self, doc: str):
         parsed = self.parse_string(doc)
         return Counter(parsed)
+
+
+    def store_label(self, label, id, freqs):
+        if label not in self.doc_index:
+            self.doc_index[label] = {}
+        d_index = self.doc_index[label]
+        d_index[id] = freqs
+
 
     def learn_vocabulary(self, text, label, id):
         if label not in self.doc_index:
