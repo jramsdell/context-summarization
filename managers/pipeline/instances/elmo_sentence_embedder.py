@@ -18,6 +18,8 @@ class ElmoVectorEmbedderRunner(AbstractPipelineRunner):
         self.embedding_size = 1024
         self.model = ElmoEmbedder()
 
+        self.null_vector = np.zeros((self.max_sentences, 1024))
+
 
 
 
@@ -71,8 +73,8 @@ class ElmoVectorEmbedderRunner(AbstractPipelineRunner):
             if embedded is not None:
                 results.append(embedded)
             else:
+                results.append(self.null_vector)
                 print("Problem with: {}".format(idx))
-            results.append(self.get_embedding(tokens))
             if idx % 100 == 0:
                 print("{} out of {}".format(idx, mlength))
         return results
@@ -103,7 +105,7 @@ if __name__ == '__main__':
     #
     # nreader.run()
 
-    file_loc = "/home/jsc57/projects/context_summarization/managers/preprocessing/new_paragraphs-stoken-jsonl"
+    file_loc = "/home/jsc57/projects/context_summarization/managers/preprocessing/100_redux_paragraphs-stoken-jsonl"
     in_dict = {
         PipeEnum.IN_LOC.value : file_loc
     }

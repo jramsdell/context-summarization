@@ -15,7 +15,7 @@ class TextBlobSentenceTokenizerPipeline(AbstractTextPipeline):
 
 
 if __name__ == '__main__':
-    file_loc = "/home/jsc57/projects/context_summarization/managers/preprocessing/new_paragraphs-base-jsonl"
+    file_loc = "/home/jsc57/projects/context_summarization/managers/preprocessing/100_redux_paragraphs-base-jsonl"
 
     in_dict = {
         PipeEnum.IN_LOC.value : file_loc

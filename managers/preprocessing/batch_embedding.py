@@ -53,12 +53,15 @@ class RunPreparer(object):
 
         for (run_name,run) in self.qmap.items():
             for (query, run_lines) in run.items():
+                # todo: remove this next line later
+                # if query.startswith("enwiki"):
+                #     continue
                 counter = 0
                 for run_line in run_lines:
                     pids.add(run_line.pid)
                     pmap[run_name][query].append(run_line.pid)
                     counter += 1
-                    if counter >= 20:
+                    if counter > 100:
                         break
         return pids
 
@@ -110,16 +113,17 @@ class RunPreparer(object):
             context_index_map.append(query)
 
 
-        with open("new_paragraphs.index", "w") as out:
+
+        with open("100_redux_paragraphs.index", "w") as out:
             out.write("\n".join(paragraph_index_map))
 
-        with open("new_paragraphs-base-jsonl", "w") as out:
+        with open("100_redux_paragraphs-base-jsonl", "w") as out:
             out.write("\n".join(paragraphs))
 
-        with open("new_contexts.index", "w") as out:
+        with open("100_redux_contexts.index", "w") as out:
             out.write("\n".join(context_index_map))
 
-        with open("new_contexts-base-jsonl", "w") as out:
+        with open("100_redux_contexts-base-jsonl", "w") as out:
             out.write("\n".join(contexts))
 
 
